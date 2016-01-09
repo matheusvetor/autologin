@@ -1,8 +1,21 @@
 var casper = require('casper').create();
+var username = '00713105';
+var password = 'ac83fba4';
 
-casper.start('http://globo.com', function() {
+casper.start('http://tvopen.com.br', function() {
   this.echo(this.getTitle());
-  this.fill('form[id="formaut"]', { username: '00713105', password: 'ac83fba4' }, true)
+});
+
+casper.then(function() {
+  casper.wait(5000, function(){
+    this.echo(this.getTitle());
+    if (this.exists('form#formaut')) {
+      this.echo('formulário existe');
+      this.sendKeys('input[name="username"]', username);
+      this.sendKeys('input[name="password"]', password);
+      this.click('form#formaut button');
+    };
+  });
 });
 
 casper.run();
